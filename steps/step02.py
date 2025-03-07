@@ -27,3 +27,11 @@ f = Square()
 y = f(x)
 print(type(y))
 print(y.data)
+
+
+print(Function(x).data)
+
+"""
+Function 클래스라고 해서(__call__ 메서드가 있다고 해서) 직접적으로 함수 호출하듯이 못 씀
+인스턴스를 생성 후에 함수처럼 이용가능!
+"""
