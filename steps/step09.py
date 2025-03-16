@@ -16,7 +16,7 @@ class Variable:
 
     def backward(self):
         if self.grad is None:
-            self.grad = np.ones_like(self.data)
+            self.grad = np.ones_like(self.data) # self.data와 형상과 데이터 타입이 같은 ndarray 인스턴스 생성 + 모든 요소 1로 채움
 
         funcs = [self.creator]
         while funcs:
@@ -29,7 +29,7 @@ class Variable:
 
 
 def as_array(x):
-    if np.isscalar(x):
+    if np.isscalar(x): # 스칼라 타입인지 확인
         return np.array(x)
     return x
 
@@ -90,3 +90,8 @@ print(x.grad)
 x = Variable(np.array(1.0))  # OK
 x = Variable(None)  # OK
 x = Variable(1.0)  # NG
+
+"""
+np.array(1.0) -> 0차원 ndarray, 계산에 사용하면 타입 바뀜(float32, float64)
+np.array([1.0]) -> 1차원 ndarray, 계산에 사용해도 타입 유지
+"""
