@@ -10,6 +10,7 @@ class Variable:
     def set_creator(self, func):
         self.creator = func
 
+    # 재귀는 중간 결과를 메모리 유지 -> 반복문을 사용하는 것이 더 효율적 + 가독성
     def backward(self):
         funcs = [self.creator]
         while funcs:
