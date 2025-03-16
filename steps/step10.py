@@ -90,9 +90,11 @@ class SquareTest(unittest.TestCase):
         self.assertEqual(x.grad, expected)
 
     def test_gradient_check(self):
-        x = Variable(np.random.rand(1))
+        x = Variable(np.random.rand(1)) # 무작위로 입력값을 받는다
         y = square(x)
         y.backward()
-        num_grad = numerical_diff(square, x)
-        flg = np.allclose(x.grad, num_grad)
+        num_grad = numerical_diff(square, x) # 수치 미분한 값 & 역전파 계산 값 비교
+        flg = np.allclose(x.grad, num_grad) # ndarray 인스턴스의 값이 가까운지 비교
         self.assertTrue(flg)
+
+unittest.main()
