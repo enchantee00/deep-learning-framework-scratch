@@ -9,10 +9,10 @@ class Variable:
 
 class Function:
     def __call__(self, input):
-        x = input.data
+        x = input.data 
         y = self.forward(x)
-        output = Variable(y)
-        self.input = input
+        output = Variable(y) # 여러 함수가 공유함 -> input & output 형식을 같게 해주기 위해서 Variable로 감싼다.
+        self.input = input # 각 함수마다 input을 기억하게 한다 -> 역전파 때 사용
         return output
 
     def forward(self, x):
@@ -53,7 +53,7 @@ a = A(x)
 b = B(a)
 y = C(b)
 
-y.grad = np.array(1.0)
+y.grad = np.array(1.0) # 역전파는 1.0에서 시작
 b.grad = C.backward(y.grad)
 a.grad = B.backward(b.grad)
 x.grad = A.backward(a.grad)
