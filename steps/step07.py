@@ -61,6 +61,7 @@ A = Square()
 B = Exp()
 C = Square()
 
+# forward: 함수-변수 연결
 x = Variable(np.array(0.5))
 a = A(x)
 b = B(a)
@@ -69,4 +70,9 @@ y = C(b)
 # backward
 y.grad = np.array(1.0)
 y.backward()
-print(x.grad)
+print(x.grad) # 역전파가 끝나면 처음 input의 grad에 최종 미분값이 전달된다.
+
+"""
+함수-변수 연결은 순전파로 데이터를 흘려보낼 때 만들어진다.
+함수와 변수를 노드로 보고 이들이 연결된 데이터 구조, 즉 **링크드 리스트**를 이용해 계산 그래프를 표현한다.
+"""
