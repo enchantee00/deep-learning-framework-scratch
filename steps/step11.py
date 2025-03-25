@@ -36,6 +36,7 @@ def as_array(x):
 
 class Function:
     def __call__(self, inputs):
+        # 입출력이 여러개일 경우를 대비
         xs = [x.data for x in inputs]  # Get data from Variable
         ys = self.forward(xs)
         outputs = [Variable(as_array(y)) for y in ys]  # Wrap data
