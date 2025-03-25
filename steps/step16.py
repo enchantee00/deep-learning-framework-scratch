@@ -1,5 +1,6 @@
 import numpy as np
-
+import heapq
+import itertools
 
 class Variable:
     def __init__(self, data):
@@ -25,17 +26,22 @@ class Variable:
 
         funcs = []
         seen_set = set()
+        counter = itertools.count()  # 고유 순번 생성기
 
         def add_func(f):
-            if f not in seen_set:
-                funcs.append(f)
+            if f not in seen_set: # 같은 인스턴스의 함수로 중복 전파하지 않게
+                heapq.heappush(funcs, (-f.generation, next(counter), f))
                 seen_set.add(f)
-                funcs.sort(key=lambda x: x.generation)
-
+                """
+                heapq -> 넣으려는 값이 Function 클래스이므로 같은 generation일 때 비교가 불가능
+                고유 값을 추가해서 비교 가능하게 만들어야 함.
+                만약 부등호 식으로 비교 가능한 숫자나 문자였다면 고유값 없이도 비교 가능함.
+                """
+            
         add_func(self.creator)
 
         while funcs:
-            f = funcs.pop()
+            f = heapq.heappop(funcs)[-1]
             gys = [output.grad for output in f.outputs]
             gxs = f.backward(*gys)
             if not isinstance(gxs, tuple):
