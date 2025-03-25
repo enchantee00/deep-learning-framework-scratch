@@ -8,7 +8,7 @@ class Variable:
                 raise TypeError('{} is not supported'.format(type(data)))
 
         self.data = data
-        self.grad = None
+        self.grad = None # 최종 값에는 None, backward 하면서 변수의 grad에 값을 할당한다.
         self.creator = None
 
     def set_creator(self, func):
@@ -82,7 +82,7 @@ class Add(Function):
         return y
 
     def backward(self, gy):
-        return gy, gy
+        return gy, gy # 덧셈 역전파는 input 값 상관없이 역전파 값 다음 단계로 그대로 전달
 
 
 def add(x0, x1):
