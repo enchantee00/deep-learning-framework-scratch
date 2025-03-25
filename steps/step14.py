@@ -32,7 +32,7 @@ class Variable:
             for x, gx in zip(f.inputs, gxs):
                 if x.grad is None:
                     x.grad = gx
-                else:
+                else: # 이미 grad 값이 있다 -> 이미 미분값이 전파됨 -> 동일한 인스턴스 변수가 쓰인 것이므로 원래 미분값에 더해준다.
                     x.grad = x.grad + gx
 
                 if x.creator is not None:
@@ -79,13 +79,14 @@ def add(x0, x1):
     return Add()(x0, x1)
 
 
+# 인스턴스 하나를 만들어서 덧셈 계산에 사용(같은 변수 반복)
 x = Variable(np.array(3.0))
 y = add(x, x)
 y.backward()
 print(x.grad)
 
 
-x = Variable(np.array(3.0))  # or x.cleargrad()
+x.cleargrad() # 새로운 인스턴스 만들지 않고 grad 값 초기화
 y = add(add(x, x), x)
 y.backward()
 print(x.grad)
