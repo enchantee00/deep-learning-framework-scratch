@@ -14,7 +14,7 @@ class Variable:
         self.generation = 0
 
     def set_creator(self, func):
-        self.creator = func
+        self.creator = func # function 인스턴스 참조
         self.generation = func.generation + 1
 
     def cleargrad(self):
@@ -70,6 +70,10 @@ class Function:
         for output in outputs:
             output.set_creator(self)
         self.inputs = inputs
+        """
+        variable 인스턴스 참조 -> 순환참조 -> weakref 사용
+        서로 참조하는 경우, 한쪽만 약한 참조로 하면 순환참조 피할 수 있음
+        """
         self.outputs = [weakref.ref(output) for output in outputs]
         return outputs if len(outputs) > 1 else outputs[0]
 
