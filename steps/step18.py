@@ -9,11 +9,16 @@ class Config:
 
 @contextlib.contextmanager
 def using_config(name, value):
+    # 전처리
+    """
+    using config를 사용하는 순간에만 enable_backprop 값을 변경
+    """
     old_value = getattr(Config, name)
     setattr(Config, name, value)
     try:
         yield
     finally:
+        # 후처리
         setattr(Config, name, old_value)
 
 
@@ -71,7 +76,11 @@ class Variable:
                     add_func(x.creator)
 
             if not retain_grad:
-                for y in f.outputs:
+                """
+                중간 계산 과정에 포함된 변수들의 grad 정보 삭제
+                이미 역전파가 지나간 '출력 변수'들의 grad만 삭제됨 -> 다음 연산에 더 이상 사용되지 않으므로
+                """
+                for y in f.outputs: 
                     y().grad = None  # y is weakref
 
 
@@ -89,6 +98,10 @@ class Function:
             ys = (ys,)
         outputs = [Variable(as_array(y)) for y in ys]
 
+        """
+        계산 그래프를 아에 만들지 않음 -> 역전파 불가능 -> 메모리 절약
+        with torch.no_grad():
+        """
         if Config.enable_backprop:
             self.generation = max([x.generation for x in inputs])
             for output in outputs:
