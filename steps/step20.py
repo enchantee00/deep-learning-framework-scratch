@@ -82,7 +82,7 @@ class Variable:
 
         while funcs:
             f = funcs.pop()
-            gys = [output().grad for output in f.outputs]  # output is weakref
+            gys = [output().grad for output in f.outputs]  # output is weakref -> output() 해줘야 함
             gxs = f.backward(*gys)
             if not isinstance(gxs, tuple):
                 gxs = (gxs,)
@@ -98,7 +98,7 @@ class Variable:
 
             if not retain_grad:
                 for y in f.outputs:
-                    y().grad = None  # y is weakref
+                    y().grad = None  # y is weakref -> 이미 전파시킨 값들은 참조를 끊어준다.
 
 
 def as_array(x):
