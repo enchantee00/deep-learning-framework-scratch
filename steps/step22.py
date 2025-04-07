@@ -242,6 +242,10 @@ class Pow(Function):
 def pow(x, c):
     return Pow(c)(x)
 
+"""
+rsub, rdiv은 연산 내에서 왼쪽 값이 Variable 클래스가 아닐 때 사용되는데, 이때 우항의 메서드를 호출하도록 함
+하지만 add와 달리 sub, div는 순서가 중요한 연산자이므로 rsub, rdiv에서 자체적으로 순서를 바꿔줌
+"""
 
 Variable.__add__ = add
 Variable.__radd__ = add
@@ -269,3 +273,4 @@ print(y)  # variable(1.5)
 y = x ** 3
 y.backward()
 print(y)  # variable(8.0)
+print(x.grad)  # 12.0
