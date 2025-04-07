@@ -22,6 +22,11 @@ def no_grad():
 
 
 class Variable:
+    """
+    좌항 ndarray 클래스와 우항 Variable 클래스가 있을 때 좌항의 __add__ 메서드가 호출됨
+    -> ndarray 클래스의 __add__ 메서드는 backward와 같은 기능이 없음
+    -> 우리가 정의한 __add__ 메서드가 쓰이길 원하므로, 연산자 우선순위를 높여 우항인 variable의 __radd__ 메서드를 호출하도록 함
+    """
     __array_priority__ = 200
 
     def __init__(self, data, name=None):
@@ -169,7 +174,10 @@ def mul(x0, x1):
     x1 = as_array(x1)
     return Mul()(x0, x1)
 
-
+"""
+__rmul__, __radd__ 은 연산 내에서 왼쪽 값이 Variable 클래스가 아닐 때 사용됨
+-> ex) 3.0 * x 일 때 3.0이 Variable 클래스가 아니므로 __rmul__ 사용
+"""
 Variable.__add__ = add
 Variable.__radd__ = add
 Variable.__mul__ = mul
@@ -184,3 +192,8 @@ print(y)
 
 y = 3.0 * x + 1.0
 print(y)
+
+y = np.array([3.0]) * x
+y.backward()
+print(y)
+print(x.grad)
