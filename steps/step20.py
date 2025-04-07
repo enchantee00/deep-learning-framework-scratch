@@ -158,6 +158,13 @@ def mul(x0, x1):
     return Mul()(x0, x1)
 
 
+"""
+함수도 객체이므로 함수 자체를 할당할 수 있음
+def __mul__(self, other):
+    return mul(self, other)
+
+-> ex) a*b 일 때 self에 a, other에 b가 할당돼서 계산
+"""
 Variable.__add__ = add
 Variable.__mul__ = mul
 
