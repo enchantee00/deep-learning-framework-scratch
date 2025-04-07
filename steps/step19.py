@@ -33,6 +33,10 @@ class Variable:
         self.creator = None
         self.generation = 0
 
+    """
+    variable도 shape, ndim, size, dtype, len 속성을 가지고 있게 하기 위해
+    @property 데코레이터를 사용하여 속성을 추가해준다.
+    """
     @property
     def shape(self):
         return self.data.shape
@@ -164,4 +168,8 @@ x.name = 'x'
 
 print(x.name)
 print(x.shape)
+print(x.ndim)
+print(x.size)
+print(x.dtype)
+print(len(x))
 print(x)
