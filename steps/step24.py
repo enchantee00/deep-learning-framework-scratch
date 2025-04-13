@@ -96,7 +96,7 @@ for batch_size in batch_sizes:
     torch.cuda.synchronize()
     static_times.append(time.time() - start)
 
-# 📊 시각화
+# 시각화
 plt.plot(batch_sizes, dynamic_times, marker='o', label='Dynamic')
 plt.plot(batch_sizes, static_times, marker='s', label='Static (torch.compile)')
 plt.xlabel('Batch Size')
