@@ -84,7 +84,7 @@ class Variable:
 
         while funcs:
             f = funcs.pop()
-            gys = [output().grad for output in f.outputs]  # output is weakref
+            gys = [output.grad for output in f.outputs]  # output is weakref
             gxs = f.backward(*gys)
             if not isinstance(gxs, tuple):
                 gxs = (gxs,)
@@ -100,7 +100,7 @@ class Variable:
 
             if not retain_grad:
                 for y in f.outputs:
-                    y().grad = None  # y is weakref
+                    y.grad = None  # y is weakref
 
 
 def as_variable(obj):
@@ -130,7 +130,7 @@ class Function:
             for output in outputs:
                 output.set_creator(self)
             self.inputs = inputs
-            self.outputs = [weakref.ref(output) for output in outputs]
+            self.outputs = [weakref.proxy(output) for output in outputs]
 
         return outputs if len(outputs) > 1 else outputs[0]
 
