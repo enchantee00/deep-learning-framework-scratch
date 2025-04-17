@@ -29,7 +29,10 @@ print('--- original sin ---')
 print(y.data)
 print(x.grad)
 
-
+"""
+사칙연산으로 sin 함수 표현 -> 따로 backward 함수 구현 필요 없음
+"""
+# threshold 값으로 계산 그래프의 복잡성을 제어할 수 있다.
 def my_sin(x, threshold=0.0001):
     y = 0
     for i in range(100000):
