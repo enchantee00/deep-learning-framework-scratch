@@ -22,3 +22,8 @@ for i in range(iters):
 gx = x.grad
 gx.name = 'gx' + str(iters + 1)
 plot_dot_graph(gx, verbose=False, to_file='tanh.png')
+
+"""
+n차 미분 계산 그래프
+역전파를 할 때마다 기존까지의 계산에 대한 새로운 계산 그래프가 만들어짐 -> 노드 수가 기하급수적으로 증가
+"""

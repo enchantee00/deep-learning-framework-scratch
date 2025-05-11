@@ -13,3 +13,8 @@ x.cleargrad()
 z = gx ** 3 + y
 z.backward()
 print(x.grad)
+
+"""
+헤세 행렬: 벡터 x(input)의 두 원소에 대한 2차 미분 행렬
+- lr가 아닌 헤세 행렬의 역행렬을 이용해서 갱신 진행 거리를 조정
+"""
