@@ -11,3 +11,4 @@ print(y)
 
 y.backward()
 print(x1.grad)
+print(x0.grad)
