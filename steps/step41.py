@@ -11,4 +11,11 @@ y = F.matmul(x, w)
 y.backward()
 
 print(x.grad.shape)
+print(x.shape)
 print(w.grad.shape)
+print(w.shape)
+
+"""
+x.shape & x.grad.shape 동일
+w.shape & w.grad.shape 동일
+"""
