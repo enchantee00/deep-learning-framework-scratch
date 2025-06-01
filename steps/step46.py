@@ -16,7 +16,9 @@ max_iter = 10000
 hidden_size = 10
 
 model = MLP((hidden_size, 1))
-optimizer = optimizers.SGD(lr).setup(model)
+# optimizer = optimizers.SGD(lr).setup(model)
+optimizer = optimizers.MomentumSGD(lr).setup(model)
+
 
 for i in range(max_iter):
     y_pred = model(x)
@@ -28,3 +30,9 @@ for i in range(max_iter):
     optimizer.update()
     if i % 1000 == 0:
         print(loss)
+
+"""
+MomentumSGD: SGD에 관성을 추가한 버전
+- 이전 이동 방향을 누적시켜서 업데이트
+- gradient의 방향이 일관되면 가속 -> 더 빠르게 수렴 가능
+"""
