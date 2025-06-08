@@ -24,6 +24,9 @@ max_iter = math.ceil(data_size / batch_size)
 
 for epoch in range(max_epoch):
     # Shuffle index for data
+    """
+    매 에폭마다 배치 구성을 랜덤으로 하면서 + 모든 배치를 다 돌게 해야됨
+    """
     index = np.random.permutation(data_size)
     sum_loss = 0
 

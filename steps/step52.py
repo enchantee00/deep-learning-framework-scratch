@@ -22,6 +22,11 @@ if dezero.cuda.gpu_enable:
     train_loader.to_gpu()
     model.to_gpu()
 
+"""
+pytorch 같은 경우 cuda 커널 직접 구현됨
+-> cupy는 gpu에서 연산이 수행되도록 해주는 역할
+"""
+
 for epoch in range(max_epoch):
     start = time.time()
     sum_loss = 0

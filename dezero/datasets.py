@@ -9,6 +9,9 @@ from dezero.transforms import Compose, Flatten, ToFloat, Normalize
 
 
 class Dataset:
+    """
+    transform을 통해서 모델에 입/출력 데이터에 대해 전처리 할 수 있다.
+    """
     def __init__(self, train=True, transform=None, target_transform=None):
         self.train = train
         self.transform = transform
@@ -35,6 +38,22 @@ class Dataset:
 
     def prepare(self):
         pass
+
+
+class BigData(Dataset):
+    """
+    npy: numpy 어레이 저장 파일 형식
+    - 바이너리 형식 -> 읽기/쓰기 빠름
+
+    아래와 같이 파일을 분할 저장하여 필요할 때만 읽어들일 수 있음
+    """
+    def __getitem__(self, index):
+        x = np.load('data/{}.npy'.format(index))
+        t = np.load('label/{}.npy'.format(index))
+        return x, t
+    
+    def __len__(self):
+        return 1000000
 
 
 # =============================================================================
@@ -82,7 +101,7 @@ class MNIST(Dataset):
         super().__init__(train, transform, target_transform)
 
     def prepare(self):
-        url = 'http://yann.lecun.com/exdb/mnist/'
+        url = 'https://ossci-datasets.s3.amazonaws.com/mnist/'
         train_files = {'target': 'train-images-idx3-ubyte.gz',
                        'label': 'train-labels-idx1-ubyte.gz'}
         test_files = {'target': 't10k-images-idx3-ubyte.gz',

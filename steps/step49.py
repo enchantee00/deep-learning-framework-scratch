@@ -14,6 +14,9 @@ batch_size = 30
 hidden_size = 10
 lr = 1.0
 
+"""
+Dataset 상속받은 Spiral 데이터 사용
+"""
 train_set = dezero.datasets.Spiral(train=True)
 model = MLP((hidden_size, 3))
 optimizer = optimizers.SGD(lr).setup(model)

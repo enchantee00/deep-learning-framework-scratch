@@ -27,12 +27,17 @@ for epoch in range(max_epoch):
 
     for x, t in train_loader:
         y = model(x)
+        """
+        loss -> 배치당 평균 손실값
+        """
         loss = F.softmax_cross_entropy(y, t)
         acc = F.accuracy(y, t)
         model.cleargrads()
         loss.backward()
         optimizer.update()
-
+        """
+        전체 데이터셋에 대한 총 손실값을 모으려고 함 -> (평균 loss * 배치 사이즈) 더해줌
+        """
         sum_loss += float(loss.data) * len(t)
         sum_acc += float(acc.data) * len(t)
 

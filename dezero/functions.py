@@ -330,7 +330,10 @@ class ReLU(Function):
         xp = cuda.get_array_module(x)
         y = xp.maximum(x, 0.0)
         return y
-
+    
+    """
+    backward 과정에서 하는 일은 신호를 '통과'시키거나 '봉쇄'하거나 둘 중 하나
+    """
     def backward(self, gy):
         x, = self.inputs
         mask = x.data > 0

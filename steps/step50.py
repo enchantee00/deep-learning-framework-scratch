@@ -15,6 +15,11 @@ lr = 1.0
 
 train_set = dezero.datasets.Spiral(train=True)
 test_set = dezero.datasets.Spiral(train=False)
+
+"""
+Dataloader: Iterator 사용해서 데이터 불러오기 편리해짐
+- 메모리 효율적으로 사용하려면 Dataset 클래스 정의할 때부터 분할된 데이터를 동적으로 불러와야 한다.
+"""
 train_loader = DataLoader(train_set, batch_size)
 test_loader = DataLoader(test_set, batch_size, shuffle=False)
 
