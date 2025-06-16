@@ -33,4 +33,7 @@ for epoch in range(max_epoch):
     print('epoch: {}, loss: {:.4f}'.format(
         epoch + 1, sum_loss / len(train_set)))
 
+"""
+save_weights -> 재귀함수를 통해서 모델 파라미터를 저장(layer 안에 parameter / layer 가능하므로)
+"""
 model.save_weights('my_mlp.npz')
